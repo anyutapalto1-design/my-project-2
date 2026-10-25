@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "telegram": {
+      "command": "uv",
+      "args": ["run", "--quiet", "python", "-m", "telegram_mcp"]
+    }
+  }
+}

@@ -1,0 +1,10 @@
+# Secrets: the session string gives full access to the Telegram account
+.env
+*.session
+*.session-journal
+
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+downloads/
