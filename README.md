@@ -27,7 +27,19 @@ Claude видит те же чаты, что и вы.
   инструмента.
 - Telegram разрешает такие клиенты через официальный API, но массовые рассылки и спам приводят к блокировке.
 
-## Установка
+## Быстрая установка (macOS)
+
+Откройте «Терминал», вставьте команду и нажмите Enter:
+
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/anyutapalto1-design/my-project-2/claude/vibrant-maxwell-kwk8b5/install.sh)"
+```
+
+Скрипт скачает всё нужное в `~/telegram-mcp`, откроет сайт Telegram для получения ключей, проведёт вход
+(номер телефона и код из Telegram) и сам подключит сервер к Claude Desktop и Claude Code. После этого
+полностью закройте Claude (⌘Q), откройте снова и спросите: «Покажи непрочитанные в Telegram».
+
+## Установка вручную
 
 Нужен Python 3.10+ и [uv](https://docs.astral.sh/uv/) (или обычный `pip`).
 

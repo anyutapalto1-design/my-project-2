@@ -9,6 +9,7 @@ import argparse
 import asyncio
 import getpass
 import os
+import webbrowser
 
 from dotenv import set_key
 from telethon import TelegramClient
@@ -16,6 +17,15 @@ from telethon.sessions import StringSession
 
 from .config import ENV_FILE, Settings, load_env_file
 from .connection import APP_VERSION, DEVICE_MODEL
+
+API_KEYS_URL = "https://my.telegram.org/apps"
+API_KEYS_HELP = f"""\
+Сначала нужны ключи доступа к Telegram API. Сейчас откроется {API_KEYS_URL}
+  1. Введите свой номер телефона и код, который придёт в Telegram.
+  2. Если появится форма «Create new application», заполните App title и Short name
+     любыми словами (например, mytelegram) и нажмите «Create application».
+  3. Скопируйте сюда значения App api_id и App api_hash.
+"""
 
 
 def _ask(prompt: str) -> str:
@@ -36,10 +46,18 @@ async def login(print_only: bool) -> None:
     load_env_file()
     settings = Settings.from_env()
 
-    print("Вход в Telegram для MCP-сервера.")
-    print("API ID и API hash берутся на https://my.telegram.org/apps (раздел API development tools).\n")
-    api_id = settings.api_id or int(_ask("API ID: "))
-    api_hash = settings.api_hash or _ask("API hash: ")
+    print("Вход в Telegram для MCP-сервера.\n")
+    api_id, api_hash = settings.api_id, settings.api_hash
+    if not (api_id and api_hash):
+        print(API_KEYS_HELP)
+        webbrowser.open(API_KEYS_URL)
+        while not api_id:
+            raw = _ask("App api_id: ")
+            if raw.isdigit():
+                api_id = int(raw)
+            else:
+                print("Это должно быть число, например 1234567.")
+        api_hash = _ask("App api_hash: ")
 
     client = TelegramClient(StringSession(), api_id, api_hash, device_model=DEVICE_MODEL, app_version=APP_VERSION)
     await client.start(
