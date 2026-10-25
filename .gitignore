@@ -1,0 +1,11 @@
+# Переписки и всё, что дает доступ к аккаунту, в репозиторий не попадают
+exports/
+reports/
+transcripts/
+result.json
+*.session
+*.session-journal
+.env
+
+__pycache__/
+.venv/
